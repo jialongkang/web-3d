@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+   <style>
+      #myCanvas {
+      border: 2px solid black; /* Keep the solid black border */
+      display: block;          /* Ensure it behaves like a block element */
+      margin: 20px auto;      /* Center the canvas horizontally with margin */
+      padding: 0;              /* Ensure no padding is applied */
+      box-sizing: border-box;  /* Include border in the element's total width and height */
+      }
+   </style>
+</head>
+<body>
+   <h4>Update message</h4>
+   <div id="general_message" style="border: 1px solid black; padding: 10px; margin: 20px; background-color: #ffffff;">
+      <span id="consoleText"></span>
+      <div id="messageBox" style="display: none; border: 1px solid black; padding: 10px; margin: 20px; background-color: #ffffff;">
+         <span id="messageText">Message will appear here.</span>
+      </div>
+   </div>
+   <h4>Objects list</h4>
+   <div id="objectsList" style="border: 1px solid black; padding: 10px; margin: 20px; background-color: #ffffff;">
+      <span id="objectText"></span>
+   </div>
+   <h2>Sphere Options</h2>
+   <div>
+      <input type="number" id="sph_x" placeholder="x_pos" />
+      <input type="number" id="sph_y" placeholder="y_pos" />
+      <input type="number" id="sph_z" placeholder="z_pos" />
+      <input type="number" id="sph_rad" placeholder="Radius" />
+   </div>
+   <div>
+      <br />
+      <!-- Material Type Dropdown -->
+      <label for="materialType">Material:</label>
+      <select id="materialType">
+         <option value="">Select Material</option>
+         <option value="dielectric">Dielectric</option>
+         <option value="metal">Metal</option>
+         <option value="lambertian">Lambertian</option>
+      </select>
+      <!-- Material Parameters Section -->
+      <div id="materialParams" style="display: Block;">
+         <!-- Dielectric Parameters -->
+         <div id="dielectricParams" style="display: none;">
+            <input type="number" id="dielectric_param_1" placeholder="Refractive index ratio (incoming/outgoing medium)" />
+         </div>
+         
+         <!-- Metal Parameters -->
+         <div id="metalParams" style="display: none;">
+            <input type="number" id="metal_param_1" placeholder="Color_R (0-1)" />
+            <input type="number" id="metal_param_2" placeholder="Color_G (0-1)" />
+            <input type="number" id="metal_param_3" placeholder="Color_B (0-1)" />
+            <input type="number" id="metal_param_4" placeholder="Fuzz" />
+         </div>
+         
+         <!-- Lambertian Parameters -->
+         <div id="lambertianParams" style="display: none;">
+            <input type="number" id="lamb_param_1" placeholder="Color_R" />
+            <input type="number" id="lamb_param_2" placeholder="Color_G" />
+            <input type="number" id="lamb_param_3" placeholder="Color_B" />
+         </div>
+      </div>
+   </div>
+   <br />
+   <button id="sphereButton">Add Sphere</button>
+   <h2>Camera Options</h2>
+   <div>
+      <input type="number" id="camlf_x" placeholder="x_pos" />
+      <input type="number" id="camlf_y" placeholder="y_pos" />
+      <input type="number" id="camlf_z" placeholder="z_pos" />
+      <input type="number" id="cam_vfov" placeholder="vfov" />
+   </div>
+   <h2>Image Options</h2>
+   <div>
+      <input type="number" id="img_w" placeholder="Image width (pixels)" />
+      <input type="text" id="img_ar" placeholder="Aspect ratio (e.g., 16/9)" />
+      <input type="number" id="img_spp" placeholder="Samples per pixel" />
+   </div>
+   <br />
+   <button id="setDefaultsButton">Set Default Values</button>
+   <div>
+      <button id="helloButton">Say Hello</button>
+   </div>
+   <div>
+      <button id="lerpButton">Lerp Me</button>
+   </div>
+   <div>
+      <button id="renderButton">Render</button>
+   </div>
+   <div>
+      <button id="resetButton">Reset World</button>
+   </div>
+   <canvas id="myCanvas" width="400" height="225"></canvas>
+   <script src="/node_modules/three/build/three.min.js"></script>
+   <script src="scriptv3.js"></script> <!-- Link to the new JavaScript file -->
+   <script src="webRT.js"></script>
+</body>
+</html>
