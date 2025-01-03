@@ -397,7 +397,6 @@
                     <option value="sphere">Sphere</option>
                     <option value="cube">Cube</option>
                 </select>
-
                 <div id="addSphereParams" style="display: none;">
                     <label for="addSphere_radius" >Radius</label>
                     <input type="text" id="addSphere_radius" style="width: 30px"/>
@@ -411,94 +410,96 @@
             <hr>
             <h2 id="menuSubtitle1" >Image settings</h2>
             <div id="imageSettings">
-                <label for="img_w" >Pixel Width</label>
-                <input type="text" id="img_w" placeholder="1000"/> 
-                <div></div>
-                <label for="img_ar1" >Aspect Ratio</label>
-                <input type="text" id="img_ar1" placeholder="16.0" style="width: 30px"/> 
-                <label for="img_ar2" >/</label>
-                <input type="text" id="img_ar2" placeholder="9.0" style="width: 30px"/> 
-                <div></div>
-                <!-- <label for="img_vfov" >VFOV</label>
-                <input type="text" id="img_vfov" placeholder="75"/> -->
-                <label for="img_spp" >Samples Per Pixel</label>
-                <input type="text" id="img_spp" placeholder="10" style="width: 30px"/>
-                <div></div>
+                <div id="onlyImageSettings">
+                    <label for="img_w" >Pixel Width</label>
+                    <input type="text" id="img_w" placeholder="1000"/> 
+                    <div></div>
+                    <label for="img_ar1" >Aspect Ratio</label>
+                    <input type="text" id="img_ar1" placeholder="16.0" style="width: 30px"/> 
+                    <label for="img_ar2" >/</label>
+                    <input type="text" id="img_ar2" placeholder="9.0" style="width: 30px"/> 
+                    <div></div>
+                    <!-- <label for="img_vfov" >VFOV</label>
+                    <input type="text" id="img_vfov" placeholder="75"/> -->
+                    <label for="img_spp" >Samples Per Pixel</label>
+                    <input type="text" id="img_spp" placeholder="10" style="width: 30px"/>
+                    <div></div>
+                </div>
                 <button type="button" id="readyButton" style="margin-top: 5px;">Ready</button>
                 <button type="button" id="renderButton" style="margin-top: 5px;" disabled>Render</button>
-                <div id="objectContent" class="hidden">
-                    <hr>
-                    <h2 id="objectTitle">Object Title</h2>
-                    <!-- Position Selection -->
-                    <h2 id="menuSubtitle1" >Object position</h2>
-                    <div id="positionSelection">
-                        <label for="xPosition" >x:</label>
-                        <input type="text" id="xPosition" placeholder="..."/>
-                        <label for="yPosition" >y:</label>
-                        <input type="text" id="yPosition" placeholder="..."/>
-                        <label for="zPosition" >z:</label>
-                        <input type="text" id="zPosition" placeholder="..."/>
-                    </div>
-                    <h2 id="menuSubtitle1" >Shape parameters</h2>
-                    <!-- Object Parameters Section -->
-                    <div id="objectParameters" class="block">
-                        <div id="cubeParams" style="display: none;">
-                            <label for="cubeParam" >Size:</label>
-                            <input type="text" id="cubeParam" placeholder="..."/>
-                        </div>
-                        <div id="sphereParams" style="display: none;">
-                            <label for="sphereParam" >Radius:</label>
-                            <input type="text" id="sphereParam" placeholder="..."/>
-                        </div>
-                    </div>
-                    <h2 id="menuSubtitle1" >Material & Texture</h2>
-                    <!-- Material and Texture Selection -->
-                    <div id="materialTextureSelection" class="hidden">
-                        <label for="materialType">Select material</label>
-                        <select id="materialType" >
-                            <option value="dielectric">Dielectric</option>
-                            <option value="metal">Metal</option>
-                            <option value="lambertian">Lambertian</option>
-                        </select>
-                        <!-- Dielectric Parameters -->
-                        <div id="dielectricParams" style="display: none;">
-                            <div>
-                                <label for="dielectric_param_1" >Refractive index:</label>
-                                <input type="text" id="dielectric_param_1" placeholder="..." />
-                            </div>
-                            <label for="dielectric_param_1" >(Incoming/Outgoing medium)</label>
-                        </div>
-                        <!-- Metal Parameters -->
-                        <div id="metalParams" style="display: none;">
-                            <div>
-                                <label for="metal_param_1" >Color R (0-1):</label>
-                                <input type="text" id="metal_param_1"  /></div>
-                            <div>
-                                <label for="metal_param_2" >Color G (0-1):</label>
-                                <input type="text" id="metal_param_2"  /></div>
-                            <div>
-                                <label for="metal_param_3" >Color B (0-1):</label>
-                                <input type="text" id="metal_param_3"  /></div>
-                            <div>
-                                <label for="metal_param_4" >Fuzz:</label>
-                                <input type="text" id="metal_param_4"  /></div>
-                        </div>
-                        
-                        <!-- Lambertian Parameters -->
-                        <div id="lambertianParams" style="display: none;">
-                            <div>
-                                <label for="lamb_param_1" >Color R (0-1):</label>
-                                <input type="text" id="lamb_param_1"  /></div>
-                            <div>
-                                <label for="lamb_param_2" >Color G (0-1):</label>
-                                <input type="text" id="lamb_param_2" /></div>
-                            <div>
-                                <label for="lamb_param_1" >Color B (0-1):</label>
-                                <input type="text" id="lamb_param_3"  /></div>
-                        </div>
-                    </div>
-                    <button type="button" id="deleteButton" style="margin-top: 5px;">Delete</button>
+            </div>
+            <div id="objectContent" class="hidden">
+                <hr>
+                <h2 id="objectTitle">Object Title</h2>
+                <!-- Position Selection -->
+                <h2 id="menuSubtitle1" >Object position</h2>
+                <div id="positionSelection">
+                    <label for="xPosition" >x:</label>
+                    <input type="text" id="xPosition" placeholder="..."/>
+                    <label for="yPosition" >y:</label>
+                    <input type="text" id="yPosition" placeholder="..."/>
+                    <label for="zPosition" >z:</label>
+                    <input type="text" id="zPosition" placeholder="..."/>
                 </div>
+                <h2 id="menuSubtitle1" >Shape parameters</h2>
+                <!-- Object Parameters Section -->
+                <div id="objectParameters" class="block">
+                    <div id="cubeParams" style="display: none;">
+                        <label for="cubeParam" >Size:</label>
+                        <input type="text" id="cubeParam" placeholder="..."/>
+                    </div>
+                    <div id="sphereParams" style="display: none;">
+                        <label for="sphereParam" >Radius:</label>
+                        <input type="text" id="sphereParam" placeholder="..."/>
+                    </div>
+                </div>
+                <h2 id="menuSubtitle1" >Material & Texture</h2>
+                <!-- Material and Texture Selection -->
+                <div id="materialTextureSelection" class="hidden">
+                    <label for="materialType">Select material</label>
+                    <select id="materialType" >
+                        <option value="dielectric">Dielectric</option>
+                        <option value="metal">Metal</option>
+                        <option value="lambertian">Lambertian</option>
+                    </select>
+                    <!-- Dielectric Parameters -->
+                    <div id="dielectricParams" style="display: none;">
+                        <div>
+                            <label for="dielectric_param_1" >Refractive index:</label>
+                            <input type="text" id="dielectric_param_1" placeholder="..." />
+                        </div>
+                        <label for="dielectric_param_1" >(Incoming/Outgoing medium)</label>
+                    </div>
+                    <!-- Metal Parameters -->
+                    <div id="metalParams" style="display: none;">
+                        <div>
+                            <label for="metal_param_1" >Color R (0-1):</label>
+                            <input type="text" id="metal_param_1"  /></div>
+                        <div>
+                            <label for="metal_param_2" >Color G (0-1):</label>
+                            <input type="text" id="metal_param_2"  /></div>
+                        <div>
+                            <label for="metal_param_3" >Color B (0-1):</label>
+                            <input type="text" id="metal_param_3"  /></div>
+                        <div>
+                            <label for="metal_param_4" >Fuzz:</label>
+                            <input type="text" id="metal_param_4"  /></div>
+                    </div>
+                    
+                    <!-- Lambertian Parameters -->
+                    <div id="lambertianParams" style="display: none;">
+                        <div>
+                            <label for="lamb_param_1" >Color R (0-1):</label>
+                            <input type="text" id="lamb_param_1"  /></div>
+                        <div>
+                            <label for="lamb_param_2" >Color G (0-1):</label>
+                            <input type="text" id="lamb_param_2" /></div>
+                        <div>
+                            <label for="lamb_param_1" >Color B (0-1):</label>
+                            <input type="text" id="lamb_param_3"  /></div>
+                    </div>
+                </div>
+                <button type="button" id="deleteButton" style="margin-top: 5px;">Delete</button>
             </div>
         </div>
     </div>

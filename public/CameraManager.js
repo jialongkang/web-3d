@@ -10,7 +10,7 @@ export default class CameraManager {
         this.isDragging = false;
         this.previousMousePosition = { x: 0, y: 0 };
         this.movementMode = 'none';
-        this.controlsEnabled = true;
+        this.controlsEnabled = false;
     }
 
     init() {

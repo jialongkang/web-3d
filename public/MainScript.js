@@ -55,20 +55,28 @@ document.getElementById('startButton').addEventListener('click', () => {
     document.getElementById('menuCanvas').classList.remove('hidden');
     document.getElementById('menuCanvas').classList.add('visible');
     sceneManager.toggleControls();
+    cameraManager.toggleControls();
     console.log('started');
 });
 
 document.getElementById('readyButton').addEventListener('click', () => {
+    if (window.ready) {return};
     console.log("Pausing 3D space. Getting ready for rendering.");
     const lookAt = cameraManager.calculateLookAt();
     sceneManager.readyRaytracing(lookAt);
-    window.ready = true;
     document.getElementById('loadingSpinner').style.display = 'block';
     document.getElementById('renderButton').disabled = false;
+    document.getElementById('readyButton').disabled = true;
+    sceneManager.toggleControls();
+    cameraManager.toggleControls();
+    document.getElementById('addObjectSettings').classList.add('hidden');
+    document.getElementById('onlyImageSettings').classList.add('hidden');
+    document.getElementById('objectContent').classList.add('hidden');
+    window.ready = true;
+    console.log("hi");
 });
 
 document.getElementById('renderButton').addEventListener('click', () => {
-    sceneManager.toggleControls();
     sceneManager.hideMenu();
 });
 
@@ -76,10 +84,12 @@ document.getElementById('resetButton').addEventListener('click', () => {
     if (!window.ready) {return;}
     console.log("Unpausing 3D space.");
     sceneManager.toggleControls();
+    cameraManager.toggleControls();
     window.ready = false;
     const canvas = document.getElementById('mySecondCanvas');
     canvas.style.display = 'none';
     animate();
+    document.getElementById('readyButton').disabled = false;
     document.getElementById('resetButton').style.display = 'none';
     document.getElementById('loadingSpinner').style.display = 'none';
     document.getElementById('renderButton').disabled = true;

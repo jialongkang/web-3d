@@ -304,11 +304,16 @@ export default class SceneManager {
         if (menuIcon.contains(event.target)) {
             this.updateImageSettings();
             menuContent.classList.toggle('hidden');
+            document.getElementById('addObjectSettings').classList.remove('hidden');
+            document.getElementById('onlyImageSettings').classList.remove('hidden');
         } 
         if (controlsIcon.contains(event.target)) {
             this.updateImageSettings();
             controlsMenu.classList.toggle('hidden');
         } 
+        // if (objectTitle.contains(event.target)) {
+        //     document.getElementById('objectContent').classList.toggle('hidden');
+        // }
 
         if (intersects.length > 0) {
             this.selection = this.objects.find(obj => obj.mesh === intersects[0].object); // Store the entire class object
@@ -357,7 +362,8 @@ export default class SceneManager {
 
 
     updateMenu(isNew = true) {
-        
+        document.getElementById('addObjectSettings').classList.remove('hidden');
+        document.getElementById('onlyImageSettings').classList.remove('hidden');
         const menuContent = document.getElementById('menuContent');
         const objectContent = document.getElementById('objectContent'); // Get the menu block
         const sections = objectContent.children; // Get all child elements of menuContent
