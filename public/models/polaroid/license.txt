@@ -1,0 +1,11 @@
+Model Information:
+* title:	Polaroid
+* source:	https://sketchfab.com/3d-models/polaroid-1e6c0c93c9fd4603822eed99350073c9
+* author:	Gabriel (https://sketchfab.com/wokom)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Polaroid" (https://sketchfab.com/3d-models/polaroid-1e6c0c93c9fd4603822eed99350073c9) by Gabriel (https://sketchfab.com/wokom) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

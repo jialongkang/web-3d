@@ -14,22 +14,31 @@ export default class Object {
           ];
         this.sceneManager = sceneManager;
         this.setupEventListeners();
+        this.directionMap = null;
     }
 
     setupEventListeners() {
+
         document.addEventListener('keydown', (event) => {
             if (!this.selected) return;
+            if (this.sceneManager.cursorInInput) return;
 
-            const directionMap = {
-                'ArrowUp': 'up',
-                'ArrowDown': 'down',
-                'ArrowLeft': 'left',
-                'ArrowRight': 'right',
-                'w': 'forward',
-                's': 'backward'
-            };
-
-            const direction = directionMap[event.key];
+            if (this.sceneManager.moveX) {
+                this.directionMap = {
+                    'ArrowUp': 'up',
+                    'ArrowDown': 'down',
+                    'ArrowLeft': 'left',
+                    'ArrowRight': 'right',
+                };
+            } else {
+                this.directionMap = {
+                    'ArrowUp': 'up',
+                    'ArrowDown': 'down',
+                    'ArrowLeft': 'forward',
+                    'ArrowRight': 'backward',
+                };
+            }
+            const direction = this.directionMap[event.key];
             if (direction) {
                 this.move(direction);
                 // updateCubeOutline();
@@ -57,9 +66,27 @@ export default class Object {
             case 'backward':
                 this.mesh.position.z -= 1;
                 break;
+
         }
-        this.updateOutline();
-        this.sceneManager.updateMenu();
+        // if (moveX) {
+        //     switch (direction) {
+        //         case 'up':
+        //             this.mesh.position.y += 1;
+        //             break;
+        //         case 'down':
+        //             this.mesh.position.y -= 1;
+        //             break;
+        //         case 'left':
+        //             this.mesh.position.x -= 1;
+        //             break;
+        //         case 'right':
+        //             this.mesh.position.x += 1;
+        //             break;
+        //     }
+        // }
+
+            this.updateOutline();
+            this.sceneManager.updateMenu();
     }
 
     updateOutline() {

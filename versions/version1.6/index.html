@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        html, body { 
+            margin: 0; 
+            padding: 0; 
+            width: 100%; 
+            height: 100%; 
+            overflow: hidden; /* Prevent scrollbars */
+        }
+        canvas { 
+            display: none; /* Initially hide the canvas */
+            position: absolute; /* Position the canvas absolutely */
+            top: 50%; /* Center vertically */
+            left: 50%; /* Center horizontally */
+            transform: translate(-50%, -50%); /* Adjust for the canvas size */
+            z-index: 0; /* Ensure it appears above the background but below the header */
+        }
+        #mySecondCanvas { /* Styles for the second canvas */
+            display: none; /* Initially hidden, change in JS */
+            z-index: 3; /* Increase z-index to ensure it appears above the 3D image */
+            background-color: white; /* Set background color to white */
+            border: 1px solid black; /* Add a black border */
+        }
+        #myThirdCanvas { /* Styles for the second canvas */
+            display: block; /* Initially hidden, change in JS */
+            z-index: 2; /* Increase z-index to ensure it appears above the 3D image */
+            border: 1px dashed red; /* Add a black border */
+        }
+        h1 {
+            position: absolute; /* Position the header absolutely */
+            top: 20px; /* Adjust as needed */
+            left: 20px; /* Adjust as needed */
+            color: white; /* Change color for visibility */
+            z-index: 1; /* Ensure it appears above the canvas */
+        }
+        .menu-collapsible {
+            width: 190px; /* Set the width of the canvas */
+            height: 20px; /* Set the height of the canvas */
+            display: none; /* Hide the menu by default */
+            position: absolute; /* Position the menu absolutely */
+            top: 20px; /* Adjust as needed */
+            right: 20px; /* Adjust as needed */
+            z-index: 4; /* Ensure it appears above everything else */
+            background-color: rgba(44, 41, 41, 0.9); /* Dark semi-transparent background */
+            border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle light border */
+            border-radius: 10px; /* Rounded corners */
+            padding: 10px; /* Padding for the menu */
+            color: #ffffff; /* Light text for contrast */
+            height: auto; /* Allow height to adjust when visible */
+            overflow: hidden; /* Prevent overflow when hidden */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Add a soft shadow */
+            font-family: 'Lucida Console'; /* Apply font to all text */
+            transition: all 1s ease-in-out; /* Smooth show/hide effect */
+        }
+        .menu-collapsible.visible {
+            display: block; /* Show the menu when it has the 'visible' class */
+            transform: scale(1); /* Grow smoothly when shown */
+            opacity: 1; /* Fade in */
+        }
+        .menu-collapsible label {
+            font-size: 12px;
+            color: #ffffff; /* White font color for labels */
+        }
+        .menu-collapsible input {
+            background-color: #616060; /* Dark grey background color */
+            color: #ffffff; /* White font color */
+            border: 1px solid #555555; /* Optional: Add a subtle border */
+        }
+        .hidden {
+            display: none; /* Hide the menu content by default */
+            visibility: hidden; /* Ensure it is not visible */
+            height: 0; /* Remove height to collapse completely */
+            transform: scale(0.95); /* Shrink slightly when hidden */
+            opacity: 0; /* Fade out */
+        }
+        .fas.fa-bars {
+            color: #ffffff; /* White color */
+        }
+        button {
+            font-size: 14px; /* Makes the text inside larger */
+            font-family: 'Garamond', sans-serif; /* Apply font to all text */
+            background-color: #333333; /* Dark grey background */
+            color: #ffffff; /* White font color */
+            margin-left: 5px;
+        }
+        button:disabled {
+            background-color: #666666; /* Lighter grey background when disabled */
+            color: #cccccc; /* Light grey font color when disabled */
+            border: 1px solid #888888; /* Lighter border when disabled */
+            cursor: not-allowed; /* Change cursor to show it's not clickable */
+        }
+        .resetButton {
+            position: absolute;
+            top: 40px;
+            right: 240px;
+            width: 50px;
+            height: 20px;
+            z-index:10;
+            font-size: 12px; /* Makes the text inside larger */
+            font-family: 'Garamond', sans-serif; /* Apply font to all text */
+            background-color: #333333; /* Dark grey background */
+            color: #ffffff; /* White font color */
+            margin-left: 5px;
+        }
+        .loader {
+            position: absolute; /* Position it absolutely within the viewport */
+            top: 35px;
+            right: 240px;
+            width: 20px; /* Size of the spinner */
+            height: 20px; /* Size of the spinner */
+            border: 5px solid #b9b6b6; /* Light grey background */
+            border-top: 5px solid #0c0c0c; /* Blue color for the spinning part */
+            border-radius: 50%; /* Make it a circle */
+            z-index: 10;
+            animation: spin 1.5s linear infinite; /* Apply the spin animation */
+        }
+        /* Keyframes for the spinning animation */
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg); /* Start rotation at 0 degrees */
+            }
+            100% {
+                transform: rotate(360deg); /* Complete a full rotation (360 degrees) */
+            }
+        }
+        #frontPageCanvas {
+            position: absolute;
+            display: block;
+            z-index: 15;
+            width: 700px;
+            height:450px;
+            background-color: rgba(136, 136, 136, 0.8);
+            color: rgb(255, 255, 255);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center; /* Optional: to center text inside the box */
+            padding: 20px; /* Optional: add padding for better spacing */
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Optional: add a subtle shadow */
+        }
+        .titleText {
+            font-family: 'Roboto', sans-serif; /* Clean and modern */
+            font-size: 36px;
+            font-weight: bold;
+            color: #ffffff;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Subtle shadow for depth */
+        }
+        .subtitleText {
+            font-family: 'Lobster', cursive; /* Stylish and welcoming */
+            font-size: 28px;
+            font-weight: normal;
+            color: #ffffff; /* Warm yellow */
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+        .bodyText {
+            font-family: 'Montserrat', sans-serif; /* Modern and readable */
+            font-size: 15px;
+            font-weight: 400;
+            color: #dddddd;
+            line-height: 1.6;
+            text-align: center;
+            margin-top: 1px;
+        }
+        .controlsText {
+            font-family: 'Montserrat', sans-serif; /* Modern and readable */
+            font-size: 15px;
+            font-weight: 300;
+            color: #dddddd;
+            line-height: 1;
+            text-align: center;
+        }
+        .startButton {
+            font-size: 20px; /* Makes the text inside larger */
+            font-family: 'Garamond', sans-serif; /* Apply font to all text */
+            background-color: rgba(136, 136, 136, 0.8);
+            color: #ffffff; /* White font color */
+            margin-left: 5px;
+        }
+        #menuContent label, #objectContent label {
+            display: inline-block; /* Align labels and inputs better */
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+        #menuContent input {
+            border: 1px solid #ccc; /* Add subtle border to inputs */
+            border-radius: 3px; /* Rounded input corners */
+        }
+        #imageSettings input {
+            width: 40px;
+        }
+        #positionSelection input {
+            width: 30px; /* Change this value to your desired width */
+            margin-bottom: 5px; /* Add some space below the input boxes */
+            text-align: left;
+            border-radius: 5px;
+        }
+        #cubeParams input, #sphereParams input {
+            width: 40px;
+        }
+        /* Add styles for metal and lambertian input boxes */
+        #metalParams input, #lambertianParams input, #dielectricParams input {
+            width: 50px; /* Change this value to your desired width */
+            border-radius: 3px;
+            margin-top: 3px;
+            margin-bottom: 3px;
+        }
+        /* Add this CSS to your existing <style> section */
+        #mainTitle {
+            font-size: 24px; /* Change font size */
+            font-weight: bold; /* Make the text bold */
+            color: black; /* Change text color to black */
+            text-align: left; /* Center the text */
+            margin: 5px; /* Remove margin */
+            color: #ffffff; /* White font color for labels */
+        }
+        #objectTitle {
+            font-size: 18px; /* Change font size */
+            font-weight: bold; /* Make the text bold */
+            color: black; /* Change text color to black */
+            text-align: left; /* Center the text */
+            margin: 5px; /* Remove margin */
+            color: #ffffff; /* White font color for labels */
+        }
+        #menuSubtitle1 {
+            font-size: 15px; /* Change font size */
+            font-weight: bold; /* Make the text bold */
+            color: black; /* Change text color to black */
+            text-align: left; /* Center the text */
+            margin: 5px; /* Remove margin */
+            color: #ffffff; /* White font color for labels */
+        }
+        #materialType, #objectType {
+            background-color: #333333; /* Dark background for the dropdown */
+            color: #ffffff; /* White font color for the text */
+            border: 1px solid #555555; /* Subtle border around the dropdown */
+            padding: 8px; /* Padding inside the dropdown for better spacing */
+            border-radius: 4px; /* Rounded corners */
+            font-family: 'Arial', sans-serif; /* Font family */
+            font-size: 12px; /* Font size */
+            margin-bottom: 3px;
+        }
+
+        #materialType option, #objectType option {
+            background-color: #333333; /* Dark background for the options */
+            color: #ffffff; /* White font color for options */
+            padding: 8px; /* Padding inside the options */
+            font-size: 12px;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- <h1>Raytracing on the web</h1> -->
+    <canvas id="myCanvas"></canvas>
+    <canvas id="mySecondCanvas"></canvas>
+    <div id="frontPageCanvas">
+        <h2 class="titleText">Welcome to Raytracing on the Web!</h2>
+        <div></div>
+        <h2 class="bodyText">This is an interactive demo of a simple C++ raytracer with a 3D scene constructor built using Three.js.</h2>
+        <h2 class="bodyText">The raytracing code is adapted from Peter Shirley's 'Ray Tracing In One Weekend' book series.</h2>
+        <!-- <br> -->
+        <h2 class="subtitleText">Basic Controls</h2>
+        <h2 class="controlsText">Camera zoom: mouse scroll</h2>
+        <h2 class="controlsText">Camera translation: mouse drag</h2>
+        <h2 class="controlsText">Camera rotation: cmd + mouse scroll</h2>
+        <h2 class="controlsText">Object motion (y-axis): up, down arrow keys</h2>
+        <h2 class="controlsText">Object motion (x-axis/z-axis): left, right arrow keys</h2>
+        <h2 class="controlsText">Swap x-axis/z-axis motion: s key</h2>
+        <h2 class="controlsText">To start the raytracing render, please press the 'Ready' then 'Render' button.</h2>
+        <button type="button" class="startButton" id="startButton">START</button>
+    </div>
+    <!-- <canvas id="myThirdCanvas"></canvas> -->
+    <div class="loader" id="loadingSpinner" style="display: none"></div>
+    <button type="button" class="resetButton" id="resetButton" style="display: none">Reset</button>
+    <!-- <div id="renderStatus" class="hidden">
+        <select id="readyType" >
+            <option value="true"></option>
+            <option value="false"></option>
+        </select>
+    </div> -->
+    <div id="menuCanvas" class="menu-collapsible hidden">
+        <div id="menuIcon" class="visible" style="display: flex; align-items: center; justify-content: space-between;">
+            <h2 id="mainTitle">Scene Manager</h2>
+            <i class="fa-solid fa-bars"></i>
+        </div>
+        <div id="menuContent" class="hidden">
+            <hr>
+            <h2 id="menuSubtitle1" >Add Objects</h2>
+            <div id="addObjectSettings" class="visible">
+                <label for="objectType">Select shape</label>
+                <select id="objectType" >
+                    <option value="">...</option>
+                    <option value="sphere">Sphere</option>
+                    <option value="cube">Cube</option>
+                </select>
+
+                <div id="addSphereParams" style="display: none;">
+                    <label for="addSphere_radius" >Radius</label>
+                    <input type="text" id="addSphere_radius" style="width: 30px"/>
+                </div>
+                <div id="addCubeParams" style="display: none;">
+                    <label for="addCube_size" >Size</label>
+                    <input type="text" id="addCube_size" style="width: 30px"/>
+                </div>
+                <button type="button" id="addObjectButton" style="display: block; margin-top: 5px" disabled >Add</button>
+            </div>
+            <hr>
+            <h2 id="menuSubtitle1" >Image Settings</h2>
+            <div id="imageSettings">
+                <label for="img_w" >Pixel Width</label>
+                <input type="text" id="img_w" placeholder="1000"/> 
+                <div></div>
+                <label for="img_ar1" >Aspect Ratio</label>
+                <input type="text" id="img_ar1" placeholder="16.0" style="width: 30px"/> 
+                <label for="img_ar2" >/</label>
+                <input type="text" id="img_ar2" placeholder="9.0" style="width: 30px"/> 
+                <div></div>
+                <!-- <label for="img_vfov" >VFOV</label>
+                <input type="text" id="img_vfov" placeholder="75"/> -->
+                <label for="img_spp" >Samples Per Pixel</label>
+                <input type="text" id="img_spp" placeholder="10" style="width: 30px"/>
+                <div></div>
+                <button type="button" id="readyButton" style="margin-top: 5px;">Ready</button>
+                <button type="button" id="renderButton" style="margin-top: 5px;" disabled>Render</button>
+                <div id="objectContent" class="hidden">
+                    <hr>
+                    <h2 id="objectTitle">Object Title</h2>
+                    <!-- Position Selection -->
+                    <h2 id="menuSubtitle1" >Object Position</h2>
+                    <div id="positionSelection">
+                        <label for="xPosition" >x:</label>
+                        <input type="text" id="xPosition" placeholder="..."/>
+                        <label for="yPosition" >y:</label>
+                        <input type="text" id="yPosition" placeholder="..."/>
+                        <label for="zPosition" >z:</label>
+                        <input type="text" id="zPosition" placeholder="..."/>
+                    </div>
+                    <h2 id="menuSubtitle1" >Shape Parameters</h2>
+                    <!-- Object Parameters Section -->
+                    <div id="objectParameters" class="block">
+                        <div id="cubeParams" style="display: none;">
+                            <label for="cubeParam" >Size:</label>
+                            <input type="text" id="cubeParam" placeholder="..."/>
+                        </div>
+                        <div id="sphereParams" style="display: none;">
+                            <label for="sphereParam" >Radius:</label>
+                            <input type="text" id="sphereParam" placeholder="..."/>
+                        </div>
+                    </div>
+                    <h2 id="menuSubtitle1" >Material & Texture</h2>
+                    <!-- Material and Texture Selection -->
+                    <div id="materialTextureSelection" class="hidden">
+                        <label for="materialType">Select material</label>
+                        <select id="materialType" >
+                            <option value="dielectric">Dielectric</option>
+                            <option value="metal">Metal</option>
+                            <option value="lambertian">Lambertian</option>
+                        </select>
+                        <!-- Dielectric Parameters -->
+                        <div id="dielectricParams" style="display: none;">
+                            <div>
+                                <label for="dielectric_param_1" >Refractive index:</label>
+                                <input type="text" id="dielectric_param_1" placeholder="..." />
+                            </div>
+                            <label for="dielectric_param_1" >(Incoming/Outgoing medium)</label>
+                        </div>
+                        <!-- Metal Parameters -->
+                        <div id="metalParams" style="display: none;">
+                            <div>
+                                <label for="metal_param_1" >Color R (0-1):</label>
+                                <input type="text" id="metal_param_1"  /></div>
+                            <div>
+                                <label for="metal_param_2" >Color G (0-1):</label>
+                                <input type="text" id="metal_param_2"  /></div>
+                            <div>
+                                <label for="metal_param_3" >Color B (0-1):</label>
+                                <input type="text" id="metal_param_3"  /></div>
+                            <div>
+                                <label for="metal_param_4" >Fuzz:</label>
+                                <input type="text" id="metal_param_4"  /></div>
+                        </div>
+                        
+                        <!-- Lambertian Parameters -->
+                        <div id="lambertianParams" style="display: none;">
+                            <div>
+                                <label for="lamb_param_1" >Color R (0-1):</label>
+                                <input type="text" id="lamb_param_1"  /></div>
+                            <div>
+                                <label for="lamb_param_2" >Color G (0-1):</label>
+                                <input type="text" id="lamb_param_2" /></div>
+                            <div>
+                                <label for="lamb_param_1" >Color B (0-1):</label>
+                                <input type="text" id="lamb_param_3"  /></div>
+                        </div>
+                    </div>
+                    <button type="button" id="deleteButton" style="margin-top: 5px;">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/node_modules/three/build/three.min.js"></script>
+    <script src="/node_modules/three/examples/js/loaders/GLTFLoader.js"></script>
+    <script type="module" src="MainScript.js"></script>
+    <script src="RenderScript.js"></script>
+    <script src="webRT.js"></script>
+    <script src="https://kit.fontawesome.com/922f7c07f7.js" crossorigin="anonymous"></script>
+</body>
+</html>
