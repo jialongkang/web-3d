@@ -256,6 +256,52 @@
             padding: 8px; /* Padding inside the options */
             font-size: 12px;
         }
+        #controlsIcon {
+            position: absolute;
+            display: block;
+            z-index: 15;
+            width: 45px;
+            height: 15px;
+            background-color: rgba(136, 136, 136, 0.8);
+            color: rgb(255, 255, 255);
+            top: 73px;
+            left: 30px;
+            border-radius: 5px;
+            text-align: center; /* Optional: to center text inside the box */
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Optional: add a subtle shadow */
+        }
+        #controlsMenu {
+            position: absolute;
+            display: block;
+            z-index: 15;
+            width: 300px;
+            height: 180px;
+            background-color: rgba(136, 136, 136, 0.8);
+            color: rgb(255, 255, 255);
+            border-radius: 5px;
+            text-align: center; /* Optional: to center text inside the box */
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Optional: add a subtle shadow */
+            padding-left: 5px;
+        }
+
+        .controlsMenuTitle {
+            font-family: 'Montserrat', sans-serif; 
+            font-size: 10px;
+            font-weight: 300;
+            color: #dddddd;
+            margin-top: 3px; /* Remove any margin from the title */
+            padding: 0; /* Remove any padding from the title */
+            line-height: 1; /* Ensure no extra vertical spacing */
+        }
+
+        .controlsMenuText {
+            font-family: 'Montserrat', sans-serif; /* Modern and readable */
+            font-size: 12px;
+            font-weight: 300;
+            color: #dddddd;
+            line-height: 1;
+            text-align: left;
+        }
 
     </style>
 </head>
@@ -324,14 +370,26 @@
             <option value="false"></option>
         </select>
     </div> -->
+    <div id="controlsIcon" class="visible">
+        <h2 class="controlsMenuTitle">Controls</h2>
+        <div id="controlsMenu" class="hidden">
+            <h2 class="controlsMenuText">Camera zoom: mouse scroll</h2>
+            <h2 class="controlsMenuText">Camera translation: mouse drag</h2>
+            <h2 class="controlsMenuText">Camera rotation: cmd + mouse scroll</h2>
+            <h2 class="controlsMenuText">Object motion (y-axis): up, down arrow keys</h2>
+            <h2 class="controlsMenuText">Object motion (x-axis/z-axis): left, right arrow keys</h2>
+            <h2 class="controlsMenuText">Swap x-axis/z-axis motion: s key</h2>
+            <h2 class="controlsMenuText">To start the raytracing render, please press the 'Ready' then 'Render' button.</h2>
+        </div>
+    </div>
     <div id="menuCanvas" class="menu-collapsible hidden">
         <div id="menuIcon" class="visible" style="display: flex; align-items: center; justify-content: space-between;">
-            <h2 id="mainTitle">Scene Manager</h2>
+            <h2 id="mainTitle">Scene manager</h2>
             <i class="fa-solid fa-bars"></i>
         </div>
         <div id="menuContent" class="hidden">
             <hr>
-            <h2 id="menuSubtitle1" >Add Objects</h2>
+            <h2 id="menuSubtitle1" >Add objects</h2>
             <div id="addObjectSettings" class="visible">
                 <label for="objectType">Select shape</label>
                 <select id="objectType" >
@@ -351,7 +409,7 @@
                 <button type="button" id="addObjectButton" style="display: block; margin-top: 5px" disabled >Add</button>
             </div>
             <hr>
-            <h2 id="menuSubtitle1" >Image Settings</h2>
+            <h2 id="menuSubtitle1" >Image settings</h2>
             <div id="imageSettings">
                 <label for="img_w" >Pixel Width</label>
                 <input type="text" id="img_w" placeholder="1000"/> 
@@ -372,7 +430,7 @@
                     <hr>
                     <h2 id="objectTitle">Object Title</h2>
                     <!-- Position Selection -->
-                    <h2 id="menuSubtitle1" >Object Position</h2>
+                    <h2 id="menuSubtitle1" >Object position</h2>
                     <div id="positionSelection">
                         <label for="xPosition" >x:</label>
                         <input type="text" id="xPosition" placeholder="..."/>
@@ -381,7 +439,7 @@
                         <label for="zPosition" >z:</label>
                         <input type="text" id="zPosition" placeholder="..."/>
                     </div>
-                    <h2 id="menuSubtitle1" >Shape Parameters</h2>
+                    <h2 id="menuSubtitle1" >Shape parameters</h2>
                     <!-- Object Parameters Section -->
                     <div id="objectParameters" class="block">
                         <div id="cubeParams" style="display: none;">

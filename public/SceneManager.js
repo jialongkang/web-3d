@@ -299,11 +299,16 @@ export default class SceneManager {
         const menuCanvas = document.getElementById('menuCanvas');
         const menuContent = document.getElementById('menuContent');
         const isClickInsideMenu = menuCanvas.contains(event.target); // Update the variable
+        const controlsMenu = document.getElementById('controlsMenu');
 
         if (menuIcon.contains(event.target)) {
             this.updateImageSettings();
             menuContent.classList.toggle('hidden');
-        }
+        } 
+        if (controlsIcon.contains(event.target)) {
+            this.updateImageSettings();
+            controlsMenu.classList.toggle('hidden');
+        } 
 
         if (intersects.length > 0) {
             this.selection = this.objects.find(obj => obj.mesh === intersects[0].object); // Store the entire class object
