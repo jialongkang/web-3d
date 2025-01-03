@@ -65,8 +65,8 @@ export default class SceneManager {
                     this.updateText(70,55,'-z','blue');
                 } else {
                     this.moveX = true;
-                    this.updateText(18,55,'+x','red');
-                    this.updateText(70,55,'-x','red');
+                    this.updateText(18,55,'-x','red');
+                    this.updateText(70,55,'+x','red');
                 }
             }
         })

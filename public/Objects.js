@@ -54,11 +54,11 @@ export default class Object {
             case 'down':
                 this.mesh.position.y -= 1;
                 break;
-            case 'left':
-                this.mesh.position.x -= 1;
-                break;
             case 'right':
                 this.mesh.position.x += 1;
+                break;
+            case 'left':
+                this.mesh.position.x -= 1;
                 break;
             case 'forward':
                 this.mesh.position.z += 1;
